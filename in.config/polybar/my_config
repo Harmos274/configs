@@ -1,0 +1,373 @@
+[bar/top]
+enable-ipc = true
+bottom = true
+monitor = eDP1
+width = 100%
+height = 20
+dpi = 100
+
+background = #90101010
+foreground = #eee
+
+line-color = ${bar/bottom.background}
+line-size = 1
+
+padding-left = 2
+padding-right = 2
+module-margin-left = 3
+module-margin-right = 3
+
+
+separator =
+
+;font-0 = NotoSans-Regular:size=19;-1
+
+;font-0 = Misc\ Termsynu:size=19:antialias=false;3
+;font-0 = NotoSans-Regular:size=10;2
+;font-1 = Material\ Icons:size=10;0
+;font-2 = Misc\ Termsynu:size=10;-2
+;font-3 = FontAwesome:size=9;0
+
+font-0 = NotoSans-Regular:size=9;0
+font-1 = Material\ Icons:size=11;2
+font-2 = xos4\ Terminus:size=14;0
+font-3 = Siji:pixelsize=11;1
+font-4 = FontAwesome:size=11;0
+font-5 = Baekmuk Gulim,백묵 굴림:style=Regular:size=9;
+font-6 = Kochi Gothic,東風ゴシック:style=Regular,標準:size=9;
+
+
+modules-left = spotify volume backlight compton_sw wintitle
+modules-center = i3
+modules-right = wlan eth eth_usb battery cpu memory date
+
+wm-restack = i3
+
+tray-position = right
+; other tray settings
+tray-scale = 1.0
+tray-transparent = true
+tray-background = ${self.background}
+tray-maxsize = 64
+override-redirect = true
+tray-offset-y = 0
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+overline-size = 10
+overline-color = ${self.background}
+underline-size = 2
+underline-color = ${self.background}
+
+[bar/bottom]
+monitor = HDMI1
+bottom = true
+width = 100%
+height = 40
+dpi = 192
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+background = ${bar/top.background}
+foreground = ${bar/top.foreground}
+
+line-color = ${bar/top.background}
+line-size = 2
+
+spacing = 3
+padding-right = 4
+module-margin-left = 0 
+module-margin-right = 6
+
+;font-0 = NotoSans-Regular:size=10;0
+font-0 = NotoSans-Regular:size=9;0
+font-1 = Material\ Icons:size=11;2
+font-2 = xos4\ Terminus:size=14;0
+font-3 = Siji:pixelsize=11;1
+font-4 = FontAwesome:size=11;0
+
+modules-left = i3 
+modules-right = filesystem volume backlight   battery date
+
+[module/back]
+type = internal/backlight
+format = |<bar>|
+;format = <ramp> <bar>
+
+card =  intel_backlight
+
+label = %percentage%%
+ramp-0 = a
+ramp-1 = a
+ramp-2 = a
+
+bar-width = 21
+bar-indicator = ǀ 
+bar-indicator-font = 3
+bar-indicator-foreground = #c9665e
+bar-fill = ǀ
+bar-fill-font = 3
+bar-fill-foreground = #c9665e
+bar-empty = ǀ
+bar-empty-font = 3
+bar-empty-foreground = #44
+
+[module/compton_sw]
+type = custom/script
+
+format = <label>
+exec = echo "c"
+click-left = /home/ab/tek01project/SHELL_ME/switch_compton.sh
+click-right = /home/ab/tek01project/SHELL_ME/rofiwifi.sh
+
+[module/consumation]
+type = custom/script
+
+exec = /home/ab/.config/polybar/scripts/power.sh
+interval = 2
+
+[module/i3]
+type = internal/i3
+
+pin-workspaces = true
+strip-wsnumbers = true
+index-sort = true
+
+; Use fuzzy (partial) matching on labels when assigning 
+; icons to workspaces
+; Example: code;♚ will apply the icon to all workspaces 
+; containing 'code' in the label
+; Default: false
+fuzzy-match = true
+
+ws-icon-0 = 1;¤
+ws-icon-1 = 2;♛
+ws-icon-2 = 3;♜
+ws-icon-3 = 4;♝
+ws-icon-4 = 5;♞
+ws-icon-default = ♟
+
+label-dimmed-underline = ${root.background}
+
+; Available tags:
+;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
+;   <label-mode> (default)
+format = <label-state> <label-mode>
+
+; Available tokens:
+;   %mode%
+; Default: %mode%
+label-mode = %mode%
+label-mode-padding = 0
+label-mode-background = #e60053
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-focused = %name%
+label-focused-foreground = #ffffff
+;label-focused-background = #3f3f3f
+label-focused-underline = #fba922
+label-focused-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-unfocused = %name%
+label-unfocused-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-visible = %index%
+label-visible-underline = #555555
+label-visible-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-urgent = %name%
+label-urgent-foreground = #ffffff
+label-urgent-underline = #bd2c40
+label-urgent-padding = 2
+
+; Separator in between workspaces
+label-separator = -|-
+label-separator-padding = 0
+label-separator-foreground = #ffb52a
+
+[module/spotify]
+type = custom/script
+interval = 5
+;format-prefix = "  "  
+format = <label>
+exec = /home/ab/.config/polybar/scripts/spotify.py 2> /dev/null
+format-underline = #1db954
+
+[module/volume]
+type = internal/alsa
+
+format-volume = |<bar-volume>|
+;format-volume-prefix =
+format-volume-prefix-foreground=
+label-volume-foreground = 
+
+;format-muted-prefix = ||||||||||
+format-muted-prefix-foreground= #ff0000
+label-muted = |ǀǀǀǀǀǀǀǀǀǀǀǀǀǀǀǀǀǀǀǀǀ|
+label-muted-foreground= #999900
+
+bar-volume-width = 21
+bar-volume-gradient = true
+bar-volume-indicator = ǀ
+bar-volume-indicator-font = 1
+bar-volume-indicator-foreground = #1db954 
+bar-volume-fill = ǀ
+bar-volume-fill-font = 1
+bar-volume-fill-foreground = #1db954
+bar-volume-empty = ǀ
+bar-volume-empty-font = 1
+bar-volume-empty-foreground = #44
+
+[module/battery]
+type = internal/battery
+battery = BAT1
+adapter = AC
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+
+format-discharging = <ramp-capacity> <label-discharging>
+
+format-full-prefix = "[]"
+format-full-prefix-foreground = #000077
+
+;ramp-capacity-foreground = ${colors.foreground-prefix}
+ramp-capacity-0 = "[]"
+ramp-capacity-0-foreground = #770000
+ramp-capacity-1 = "[]"
+ramp-capacity-1-foreground = #777700
+ramp-capacity-2 = "[]"
+ramp-capacity-2-foreground = #007700
+
+;animation-charging-foreground = ${colors.foreground-prefix}
+
+animation-charging-0 = "[]"
+animation-charging-0-foreground = #770000
+animation-charging-1 = "[]"
+animation-charging-1-foreground = #777700
+animation-charging-2 = "[]"
+animation-charging-2-foreground = #007700
+animation-charging-framerate = 1000
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "CPU : "
+;format-prefix-foreground=${colors.foreground-prefix}
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "RAM : "
+;format-prefix-foreground=${colors.foreground-prefix}
+label = %percentage_used%%
+
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = " %d-%m-%Y"
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+label = %time% %date%
+;label-underline = #fba922
+
+[module/wlan]
+type = internal/network
+interface = wlp3s0
+interval = 3.0
+
+format-connected-prefix=
+format-disconnected-prefix= " OO :"
+format-connected-prefix-foreground= #1db954
+format-disconnected-prefix-foreground= #770000
+
+format-connected = <label-connected> 
+label-connected = %essid::10:..%   (%local_ip%)
+label-connected-foreground = #1db954
+format-disconnected =
+
+[module/eth]
+type = internal/network
+interface = enp0s31f6
+interval = 3.0
+
+; format-connected-underline = #55aa55                                                                 
+; format-connected-prefix = " "                                                                       
+;format-connected-prefix-foreground = ${colors.foreground-inverse}
+label-connected = E : %local_ip%
+label-connected-foreground = #1db954
+
+format-disconnected =
+;format-disconnected = <label-disconnected>                                                            
+;format-disconnected-underline = ${self.format-connected-underline}                                    
+;label-disconnected = %ifname% disconnected                                                            
+;label-disconnected-foreground = ${colors.foreground-inverse}
+
+[module/wintitle]
+type = internal/xwindow
+; Available tags:
+;   <label> (default)
+format = <label>
+;format-background = #00000000
+format-foreground = #ffffff
+format-padding = 4
+
+; Available tokens:
+;   %title%
+; Default: %title%
+label = %title%
+label-maxlen = 40
+
+; Used instead of label when there is no window title
+; Available tokens:
+;   None
+label-empty = Empty
+label-empty-foreground = #707880
+
+[module/eth_usb]
+type = internal/network
+interface = enp0s20f0u2
+interval = 3.0
+
+; format-connected-underline = #55aa55                                                                 
+; format-connected-prefix = " "                                                                       
+format-connected-prefix-foregrouSnd = ${colors.foreground-inverse}
+label-connected = E :  %local_ip% (usb)
+
+format-disconnected =
+;format-disconnected = <label-disconnected>                                                            
+;format-disconnected-underline = ${self.format-connected-underline}                                    
+;label-disconnected = %ifname% disconnected                                                            
+;label-disconnected-foreground = ${colors.foreground-inverse}
+
+; vim:ft=dosini
