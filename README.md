@@ -2,10 +2,15 @@
 All my config file
 
 i3-gaps (git)
+
 Compton (tryone version with Kawase blur)
+
 Polybar
+
 zshrc
+
 Some scripts :)
+
 
 Enjoy !
 
