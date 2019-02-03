@@ -1,0 +1,143 @@
+/**
+ * User: qball
+ * Copyright: Dave Davenport
+ */
+
+configuration {
+    show-icons: true;
+}
+
+* {
+    text-color: #d3d7cf;
+    //text-color:  #839496;
+    background-color:  rgba(0,0,0,0);
+    dark: #073642;
+    // Black
+    black:       #002b36;
+    lightblack:  #073642;
+    //
+    // Red
+    red:         #dc322f;
+    lightred:    #cb4b16;
+    //
+    // Green
+    green:       #859900;
+    lightgreen:  #586e75;
+    //
+    // Yellow
+    yellow:          #B58900;
+    lightyellow:     #657b83;
+    //
+    // Blue
+    blue:          #268b2d;
+    lightblue:     #839496;
+    //
+    // Magenta
+    magenta:          #d33682;
+    lightmagenta:     #6c71c4;
+    //
+    // Cyan
+    cyan:          #b0c4de;
+    lightcyan:     #b0c4de;
+    //
+    // White
+    white:          #eee8d5;
+    lightwhite:     #fdf6e3;
+    //
+    // Bold, Italic, Underline
+    highlight:     bold #93a1a1;
+}
+
+//configuration {
+//    show-icons: true;
+//    drun-icon-theme: "Papirus-Dark";
+//}
+
+element { padding: 5px; }
+
+window {
+    fullscreen: false;
+    height: 100%;
+    width: 25%;
+    location: west;
+    anchor:   west;
+    border:  0px 0px 0px 0px;
+    text-color: @lightwhite;
+
+    orientation: horizontal;
+    children: [mainbox, dummy];
+}
+
+#dummy {
+    expand: true;
+}
+
+#sidebar {
+    border: 0px 0px 0px 0px;
+    background-color: @lightblack;
+    padding: 0px;
+}
+
+#button selected {
+    border-color: @lightgreen;
+    text-color: @lightgreen;
+}
+
+#entry {
+    width: 20em;
+}
+
+#inputbar {
+    background-color: rgba(0,0,0,0.0);
+    text-color: @lightgreen;
+    padding: 15px;
+    border: 0px 0px 2px 0px;
+}
+#mainbox {
+    expand: false;
+    background-color: rgba(15,25,35,0.0);
+    spacing: 1em;
+}
+#listview {
+    padding: 0em 0.4em 0em 1em;
+    dynamic: false;
+    lines: 0;
+}
+#element selected  normal {
+    background-color: rgba(0,150,150,0.4);
+}
+#element normal active {
+    text-color: @lightblue;
+}
+#element normal urgent {
+    text-color: @lightred;
+}
+#element alternate normal {
+}
+#element alternate active {
+    text-color: @lightblue;
+}
+#element alternate urgent {
+    text-color: @lightred;
+}
+#element selected active {
+    background-color: @lightblue;
+    text-color: @dark;
+}
+#element selected urgent {
+    background-color: @lightred;
+    text-color: @dark;
+}
+
+#inputbar {
+    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+
+textbox-prompt-colon {
+    expand:     false;
+    str:        " > ";
+    margin:     0px 0em 0em 0em ;
+    text-color: @normal-foreground;
+}
+
+/* vim:ft=css */
