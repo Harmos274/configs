@@ -12,6 +12,15 @@ zshrc
 Some scripts :)
 
 
+REQUIREMENTS :
+
+-i3-gaps
+-Compton
+-Polybar
+-zsh
+-fzy
+
+
 Enjoy !
 
 
