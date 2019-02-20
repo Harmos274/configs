@@ -150,7 +150,6 @@ export PATH=$PATH:/home/ab/scripts/camilla_bin
 
 #blih things
 alias blih='blih -u lilian.verhac@epitech.eu -t ${BLIH_TOKEN}'
-alias ns_auth='ns_auth -u lilian.verhac@epitech.eu'
 alias ns_auth='ns_auth -u lilian.verlhac@epitech.eu'
 
 #ls
@@ -163,6 +162,10 @@ alias ne='emacs -nw'
 #fuck my life
 alias fuck='fuck.sh'
 
+#ascii
+alias ascii='man ascii'
+
+
 #valgrind
 alias vlgrd='valgringos.sh'
 alias coucou='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --dsymutil=yes'
@@ -174,6 +177,7 @@ alias i3_conf='emacs -nw /home/ab/.config/i3/config'
 alias poly_conf='emacs -nw /home/ab/.config/polybar/config'
 alias kitty_conf='emacs -nw /home/ab/.config/kitty/kitty.conf'
 alias compton_conf='emacs -nw /home/ab/.config/compton.conf'
+
 
 #tree
 alias clean_tree='make fclean ; clear ; tree'
@@ -202,4 +206,14 @@ alias STUMPERS='cd /home/ab/tek01project/STUMPERS'
 alias MUL='cd /home/ab/tek01project/MUL'
 alias SHME='cd /home/ab/tek01project/SHELL_ME'
 
+#blih alias
+alias repo_list='blih -u lilian.verlhac@epitech.eu -t $BLIH_TOKEN repository list'
 
+#weather
+alias weather='curl wttr.in/bordeaux'
+
+#dj tro cool de la mor qui tu
+alias dj='. /home/ab/tek01project/SHELL_ME/directory_jump.sh'
+
+#switch branch
+alias switch='git checkout $(git branch | cut -c 3- | fzy)'
