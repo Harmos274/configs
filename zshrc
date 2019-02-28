@@ -132,7 +132,6 @@ prompt pure
 #
 #composition xterm
 [ -n "$XTERM_VERSION" ] && transset-df -a >/dev/null
-export BLIH_TOKEN=77d670a2e341632a6aa435349121470b52e715b80580ea5d5cda04925c246f6555adc77c4f0ed7c0977fe59b0f3518752e110445540e626b0b19011c49dc87af
 #VTE for tilix
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
     source /etc/profile.d/vte.sh
