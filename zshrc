@@ -26,6 +26,8 @@
 #echo ''
 #echo ''
 
+neofetch
+
 # Path to your oh-my-zsh installation.
 export ZSH="/home/ab/.oh-my-zsh"
 
@@ -89,7 +91,7 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
-    zsh-autosuggestions
+    #zsh-autosuggestions
     gitignore
 )
 
@@ -132,6 +134,10 @@ prompt pure
 #
 #composition xterm
 [ -n "$XTERM_VERSION" ] && transset-df -a >/dev/null
+
+#Token for BLIH
+export BLIH_TOKEN=77d670a2e341632a6aa435349121470b52e715b80580ea5d5cda04925c246f6555adc77c4f0ed7c0977fe59b0f3518752e110445540e626b0b19011c49dc87af
+
 #VTE for tilix
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
     source /etc/profile.d/vte.sh
@@ -142,6 +148,12 @@ export PAGER='most'
 
 #camilla script launchable
 export PATH=$PATH:/home/ab/scripts/camilla_bin
+
+#use nvim for basic edition
+export EDITOR=/usr/bin/nvim
+
+#delete core* files
+ulimit -Sc 0
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -154,6 +166,7 @@ alias ns_auth='ns_auth -u lilian.verlhac@epitech.eu'
 #ls
 alias lr='ls -R'
 alias llr='ls -lR'
+alias fls='ls -Ahli'
 
 #emacs
 alias ne='emacs -nw'
@@ -164,19 +177,18 @@ alias fuck='fuck.sh'
 #ascii
 alias ascii='man ascii'
 
-
 #valgrind
 alias vlgrd='valgringos.sh'
 alias coucou='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --dsymutil=yes'
 
 #config
-alias zshrc='emacs -nw /home/ab/.zshrc'
+alias zshrc='nvim /home/ab/.zshrc'
 alias source_zsh='source /home/ab/.zshrc'
-alias i3_conf='emacs -nw /home/ab/.config/i3/config'
-alias poly_conf='emacs -nw /home/ab/.config/polybar/config'
-alias kitty_conf='emacs -nw /home/ab/.config/kitty/kitty.conf'
-alias compton_conf='emacs -nw /home/ab/.config/compton.conf'
-
+alias i3_conf='nvim /home/ab/.config/i3/config'
+alias poly_conf='nvim /home/ab/.config/polybar/config'
+alias kitty_conf='nvim /home/ab/.config/kitty/kitty.conf'
+alias compton_conf='nvim /home/ab/.config/compton.conf'
+alias nvim_conf='nvim /home/ab/.config/nvim/init.vim'
 
 #tree
 alias clean_tree='make fclean ; clear ; tree'
@@ -196,15 +208,6 @@ alias ccat='pygmentize -O style=vim -f console256 -g'
 #image cat
 alias icat='kitty icat'
 
-#directory
-alias CPE='cd /home/ab/tek01project/CPE'
-alias FR='cd /home/ab/tek01project/FR'
-alias MATH='cd /home/ab/tek01project/MATH'
-alias PSU='cd /home/ab/tek01project/PSU'
-alias STUMPERS='cd /home/ab/tek01project/STUMPERS'
-alias MUL='cd /home/ab/tek01project/MUL'
-alias SHME='cd /home/ab/tek01project/SHELL_ME'
-
 #blih alias
 alias repo_list='blih -u lilian.verlhac@epitech.eu -t $BLIH_TOKEN repository list'
 
@@ -216,3 +219,19 @@ alias dj='. /home/ab/tek01project/SHELL_ME/directory_jump.sh'
 
 #switch branch
 alias switch='git checkout $(git branch | cut -c 3- | fzy)'
+
+#woosh
+alias woosh='find -type f -name "core*" -delete -or -name "vgcore*" -delete -or -name "a.out" -delete'
+
+#neo vim master race
+alias v='nvim'
+
+#make aliases
+alias mk='make'
+alias mkr='make re'
+alias mkt='make tests_run'
+alias mkrt='make retest'
+alias mkc='make clean'
+alias mkfc='make fclean'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
