@@ -21,6 +21,13 @@ call plug#begin('~/.config/nvim/plugins')
   Plug 'Townk/vim-autoclose'
   Plug 'PotatoesMaster/i3-vim-syntax'
   Plug 'terryma/vim-multiple-cursors'
+  Plug 'connorholyday/vim-snazzy'
+  Plug 'arakashic/chromatica.nvim'
+  Plug 'scrooloose/nerdtree'
+  Plug 'ryanoasis/vim-devicons'
+  " Snipets
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
   " function! DoRemote(arg)
     " UpdateRemotePlugins
   " endfunction
@@ -31,7 +38,7 @@ call plug#end()
 " Let clangd fully control code completion
 let g:ycm_clangd_uses_ycmd_caching = 0
 " Use installed clangd, not YCM-bundled clangd which doesn't get updates.
-let g:ycm_clangd_binary_path = exepath("clangd")
+let g:ycm_clangd_binary_path = exepath("clangd-8")
 
 " Supr preview window
 set completeopt-=preview
@@ -48,7 +55,7 @@ set scrolloff=10   " Show 10 extra lines when scrolling up/down
 "set cursorline    " Highlight the line where the cursor is
 "set showbreak=↪
 set showbreak=-
-colorscheme gruvbox
+colorscheme snazzy
 set background=dark
 set bg=dark
 " }}}
@@ -91,6 +98,19 @@ set lazyredraw
 
 " }}}
 
+" Snipets setting
+let g:UltiSnipsExpandTrigger="<M-z>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" {{{ NERDtree setting
+nnoremap <silent> <C-k><C-B> :NERDTreeToggle<CR>
+" }}}
+
+" Chromatica setting
+let g:chromatica#libclang_path='/usr/lib/llvm-6.0/lib/libclang.so.1'
+let g:chromatica#enable_at_startup=1
+let g:chromatica#responsive_mode=1
 
 " {{{ nerdcommenter options
 let g:NERDSpaceDelims = 1
@@ -197,7 +217,7 @@ nnoremap <leader>n :set wrap!<CR>
 nnoremap <leader><CR> :set number!<CR>
 
 
-noremap <leader>t <ESC>:Lexplore<CR>
+nnoremap <leader>l :Lines<CR>
 
 " Wrapped lines goes down/up to next row, rather than next line in file.
 nnoremap j gj
