@@ -25,6 +25,7 @@ call plug#begin('~/.config/nvim/plugins')
   Plug 'arakashic/chromatica.nvim'
   Plug 'scrooloose/nerdtree'
   Plug 'ryanoasis/vim-devicons'
+  Plug 'whatyouhide/vim-gotham'
   " Snipets
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
@@ -55,9 +56,10 @@ set scrolloff=10   " Show 10 extra lines when scrolling up/down
 "set cursorline    " Highlight the line where the cursor is
 "set showbreak=↪
 set showbreak=-
-colorscheme snazzy
+colorscheme gotham256
 set background=dark
 set bg=dark
+hi Normal guibg=NONE ctermbg=NONE
 " }}}
 
 " {{{ Neomake options
