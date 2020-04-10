@@ -5,6 +5,7 @@
 
 configuration {
     show-icons: true;
+    font: "Noto Mono 12";
 }
 
 * {
@@ -61,7 +62,7 @@ window {
     width: 25%;
     location: west;
     anchor:   west;
-    border:  0px 0px 0px 0px;
+    border:  0px 0px 0px -10px;
     text-color: @lightwhite;
 
     orientation: horizontal;
@@ -84,22 +85,23 @@ window {
 }
 
 #entry {
-    width: 20em;
+    width: 22em;
 }
 
 #inputbar {
     background-color: rgba(0,0,0,0.0);
     text-color: @lightgreen;
     padding: 15px;
-    border: 0px 0px 2px 0px;
+    border: 0px 0px 0px 0px;
 }
 #mainbox {
     expand: false;
-    background-color: rgba(15,25,35,0.0);
+    background-color: rgba(35,35,35,0.7);
     spacing: 1em;
 }
 #listview {
-    padding: 0em 0.4em 0em 1em;
+    margin: 0em 1.5em 0em 0em;
+    padding: 0em 0.4em 0em 2em;
     dynamic: false;
     lines: 0;
 }
@@ -130,12 +132,12 @@ window {
 }
 
 #inputbar {
-    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+    children:   [ textbox-prompt-colon,entry,case-indicator ];
 }
 
 textbox-prompt-colon {
     expand:     false;
-    str:        " > ";
+    str:        " >> ";
     margin:     0px 0em 0em 0em ;
     text-color: @normal-foreground;
 }

@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -26,8 +33,6 @@
 #echo ''
 #echo ''
 
-neofetch
-
 # Path to your oh-my-zsh installation.
 export ZSH="/home/ab/.oh-my-zsh"
 
@@ -35,7 +40,7 @@ export ZSH="/home/ab/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME=""
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -91,24 +96,15 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
-    #zsh-autosuggestions
+    zsh-autosuggestions
+    zsh-syntax-highlighting
     gitignore
 )
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
 source $ZSH/oh-my-zsh.sh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 # User configuration
-
-#pure prompt
-
-autoload -U promptinit; promptinit
-PURE_PROMPT_SYMBOL='❖'
-
-prompt pure
-
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -133,21 +129,22 @@ prompt pure
 # For a full list of active aliases, run `alias`.
 #
 #composition xterm
+
 [ -n "$XTERM_VERSION" ] && transset-df -a >/dev/null
 
 #Token for BLIH
 export BLIH_TOKEN=77d670a2e341632a6aa435349121470b52e715b80580ea5d5cda04925c246f6555adc77c4f0ed7c0977fe59b0f3518752e110445540e626b0b19011c49dc87af
 
 #VTE for tilix
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-    source /etc/profile.d/vte.sh
-fi
+# if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+    # source /etc/profile.d/vte.sh
+# fi
 
 #color man-pages persistently
 export PAGER='most'
 
 #camilla script launchable
-export PATH=$PATH:/home/ab/scripts/camilla_bin
+export PATH=$PATH:/home/ab/.scripts/bin:/$HOME/.cargo/bin
 
 #use nvim for basic edition
 export EDITOR=/usr/bin/nvim
@@ -158,6 +155,12 @@ ulimit -Sc 0
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+# Blur {{{
+ if [[ $(ps --no-header -p $PPID -o comm) =~ '^yakuake|kitty$' ]]; then
+         for wid in $(xdotool search --pid $PPID); do
+             xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id $wid; done
+ fi
+# }}}
 
 #blih things
 alias blih='blih -u lilian.verhac@epitech.eu -t ${BLIH_TOKEN}'
@@ -167,6 +170,7 @@ alias ns_auth='ns_auth -u lilian.verlhac@epitech.eu'
 alias lr='ls -R'
 alias llr='ls -lR'
 alias fls='ls -Ahli'
+alias lsa='ls -a'
 
 #emacs
 alias ne='emacs -nw'
@@ -185,7 +189,7 @@ alias coucou='valgrind --leak-check=full --show-leak-kinds=all --track-origins=y
 alias zshrc='nvim /home/ab/.zshrc'
 alias source_zsh='source /home/ab/.zshrc'
 alias i3_conf='nvim /home/ab/.config/i3/config'
-alias poly_conf='nvim /home/ab/.config/polybar/config'
+alias poly_conf='nvim /home/ab/.config/polybar/config.ini'
 alias kitty_conf='nvim /home/ab/.config/kitty/kitty.conf'
 alias compton_conf='nvim /home/ab/.config/compton.conf'
 alias nvim_conf='nvim /home/ab/.config/nvim/init.vim'
@@ -214,14 +218,8 @@ alias repo_list='blih -u lilian.verlhac@epitech.eu -t $BLIH_TOKEN repository lis
 #weather
 alias weather='curl wttr.in/bordeaux'
 
-#dj tro cool de la mor qui tu
-alias dj='. /home/ab/tek01project/SHELL_ME/directory_jump.sh'
-
 #switch branch
 alias switch='git checkout $(git branch | cut -c 3- | fzy)'
-
-#woosh
-alias woosh='find -type f -name "core*" -delete -or -name "vgcore*" -delete -or -name "a.out" -delete'
 
 #neo vim master race
 alias v='nvim'
@@ -234,4 +232,15 @@ alias mkrt='make retest'
 alias mkc='make clean'
 alias mkfc='make fclean'
 
+alias explore='fzf --preview "bat --style=numbers --color=always {} | head -500"'
+
+#rust aliases
+alias rexplain='rustc --explain'
+
+#git aliases (not in git alias files)
+alias wtfdyd='git diff HEAD~ HEAD'
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

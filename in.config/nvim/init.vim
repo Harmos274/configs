@@ -1,18 +1,46 @@
-"This is my init.vim, it is a test for myself, I do not know how to use this editor as far
+"                                                                             .-----.
+"                                                                            /7  .  (
+"                                                                           /   .-.  \
+"                                                                          /   /   \  \
+"                                                                         / `  )   (   )
+"                                                                        / `   )   ).  \
+"                                                                      .'  _.   \_/  . |
+"      Harmos'                                        .--.           .' _.' )`.        |
+"                      .                             (    `---...._.'   `---.'_)    ..  \
+"      ##############..... ##############             \            `----....___    `. \  |
+"      ##############......##############              `.           _ ----- _   `._  )/  |
+"        ##########..........##########                  `.       /"  \   /"  \`.  `._   |
+"        ##########........##########                      `.    ((O)` ) ((O)` ) `.   `._\
+"        ##########.......##########                         `-- '`---'   `---' )  `.    `-.
+"        ##########.....##########..                            /                  ` \      `-.
+"        ##########....##########.....                        .'                      `.       `.
+"      ..##########..##########.........                     /                     `  ` `.       `-.
+"    ....##########.#########.............            .--.   \ ===._____.======. `    `   `. .___.--`     .''''.
+"      ..################JJJ............             ' .` `-. `.                )`. `   ` ` \          .' . '  8)
+"        ################.............              (8  .  ` `-.`.               ( .  ` `  .`\      .'  '    ' /
+"        ##############.JJJ.JJJJJJJJJJ               \  `. `    `-.               ) ` .   ` ` \  .'   ' .  '  /
+"        ############...JJ...JJ..JJ  JJ               \ ` `.  ` . \`.    .--.     |  ` ) `   .``/   '  // .  /
+"        ##########....JJ...JJ..JJ  JJ                 `.  ``. .   \ \   .-- `.  (  ` /_   ` . / ' .  '/   .'
+"        ########......JJJ..JJJ JJJ JJJ                  `. ` \  `  \ \  '-.   `-'  .'  `-.  `   .  .'/  .'
+"        ######    .........                               \ `.`.  ` \ \    ) /`._.`       `.  ` .  .'  /
+"                    .....                           LGB    |  `.`. . \ \  (.'               `.   .'  .'
+"                      .                                 __/  .. \ \ ` ) \                     \.' .. \__
+"                                                 .-._.-'     '"  ) .-'   `.                   (  '"     `-._.--.
+"                                                (_________.-====' / .' /\_)`--..__________..-- `====-. _________)
+"                                                                 (.'(.'
 
-"Plugin manager ?
+"Plugin manager Vim Plug
 
 " {{{ Plugins
 call plug#begin('~/.config/nvim/plugins')
-  Plug 'arakashic/nvim-colors-solarized'
-  Plug 'neomake/neomake'
+
   Plug 'scrooloose/nerdcommenter'
+  Plug 'rakr/vim-one'
   Plug 'tpope/vim-vinegar'
   Plug 'tpope/vim-surround'
   Plug 'alvan/vim-closetag'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim',
-  Plug 'Valloric/YouCompleteMe'
   Plug 'itchyny/lightline.vim',
   Plug 'sheerun/vim-polyglot'
   Plug 'editorconfig/editorconfig-vim'
@@ -21,56 +49,37 @@ call plug#begin('~/.config/nvim/plugins')
   Plug 'Townk/vim-autoclose'
   Plug 'PotatoesMaster/i3-vim-syntax'
   Plug 'terryma/vim-multiple-cursors'
-  Plug 'connorholyday/vim-snazzy'
   Plug 'arakashic/chromatica.nvim'
-  Plug 'scrooloose/nerdtree'
   Plug 'ryanoasis/vim-devicons'
-  Plug 'whatyouhide/vim-gotham'
-  " Snipets
-  Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'rhysd/vim-clang-format'
+
   " function! DoRemote(arg)
     " UpdateRemotePlugins
   " endfunction
-  " Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-call plug#end()
-" }}}
 
-" Let clangd fully control code completion
-let g:ycm_clangd_uses_ycmd_caching = 0
-" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
-let g:ycm_clangd_binary_path = exepath("clangd-8")
+call plug#end()
+
+" }}}
 
 " Supr preview window
 set completeopt-=preview
 
 " {{{ colorscheme/style options
 syntax enable
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1 " forces true color
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1 " Changes cursor to a line on insert mode
-"set termguicolors " Enables truecolor in neovim >= 0.1.5
-"set number        " Displays line numbers
+set termguicolors  " Enables truecolor in neovim >= 0.1.5
 set novisualbell
 set errorbells
 set scrolloff=10   " Show 10 extra lines when scrolling up/down
-"set cursorline    " Highlight the line where the cursor is
-"set showbreak=↪
 set showbreak=-
-colorscheme gotham256
-set background=dark
-set bg=dark
-hi Normal guibg=NONE ctermbg=NONE
-" }}}
 
-" {{{ Neomake options
-:highlight NeomakeSign guifg=Yellow guibg=#dc322f gui=bold
-"let g:neomake_warning_sign={'text': '•', 'texthl': 'NeomakeSign'}
-let g:neomake_warning_sign={'text': '•', 'texthl': 'NeomakeSign'}
-"let g:neomake_error_sign={'text': '!', 'texthl': 'NeomakeSign'}
-let g:neomake_error_sign={'text': '!', 'texthl': 'NeomakeSign'}
-call neomake#configure#automake('nrw')
-let g:neomake_c_enabled_makers = ['clangtidy']
-let g:neomake_cpp_enabled_makers = ['clangtidy']
+colorscheme one
+let g:one_allow_italics = 1 " make comments italics
+
+set bg=dark
+
+hi Normal guibg=NONE ctermbg=NONE
+highlight SignColumn guibg=NONE ctermbg=NONE
 " }}}
 
 " {{{ Misc UI settings
@@ -83,9 +92,6 @@ set mouse=a
 " Be a bit faster when executing command-line shell stuff
 set noshelltemp
 
-" hide open buffers instead of closing them, when opening a new one with :e
-"set hidden
-
 " Deactivate the PRESS ENTER OR TYPE COMMAND TO CONTINUE message
 set shortmess=atI
 
@@ -95,22 +101,10 @@ set clipboard=unnamedplus
 " Add some space around the cursor when moving it near the borders of the screen
 set sidescrolloff=1
 
-" Redraw the screen a bit less (helps when editing ruby files)
-set lazyredraw
-
-" }}}
-
-" Snipets setting
-let g:UltiSnipsExpandTrigger="<M-z>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" {{{ NERDtree setting
-nnoremap <silent> <C-k><C-B> :NERDTreeToggle<CR>
 " }}}
 
 " Chromatica setting
-let g:chromatica#libclang_path='/usr/lib/llvm-6.0/lib/libclang.so.1'
+let g:chromatica#libclang_path='/usr/lib/libclang.so'
 let g:chromatica#enable_at_startup=1
 let g:chromatica#responsive_mode=1
 
@@ -121,6 +115,7 @@ let g:NERDSpaceDelims = 1
 "{{{ lightline options
 " Makes sure the status line is drawn in all buffers, not only the active one
 set laststatus=2
+
 let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
@@ -136,10 +131,6 @@ let g:lightline = {
       \   'filetype': 'LightlineFiletype',
       \   'fileencoding': 'LightlineFileencoding',
       \   'mode': 'LightlineMode',
-      \   'neomake': 'LightlineNeomake'
-      \ },
-      \ 'compopent_type': {
-      \   'neomake': 'error'
       \ },
       \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
       \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
@@ -199,15 +190,6 @@ let g:closetag_filenames = "*.html,*.html.erb"
 
 let g:mapleader=","              " set the <leader> key to comma
 
-
-" Line formating like vscode
-nnoremap <M-Up> :m-2<CR>==
-nnoremap <M-Down> :m+<CR>==
-inoremap <M-Up> :m-2<CR>==gi
-inoremap <M-Down> :m+<CR>==gi
-vnoremap <M-Up> :m '<-2<CR>gv=gv
-vnoremap <M-Down> :m '>+1<CR>gv=gv
-
 " Map ESC to jk
 imap jk <ESC>
 imap Jk <ESC>
@@ -218,8 +200,6 @@ nnoremap <leader>n :set wrap!<CR>
 " Toggle line number
 nnoremap <leader><CR> :set number!<CR>
 
-
-nnoremap <leader>l :Lines<CR>
 
 " Wrapped lines goes down/up to next row, rather than next line in file.
 nnoremap j gj
@@ -251,8 +231,8 @@ nnoremap <leader>; A;<ESC>
 inoremap <leader>; <ESC>A;
 
 " Split buffer vertically or horizontally: leader v, leader h
-nnoremap <leader>v <C-w>v
-nnoremap <leader>h <C-w>s
+nnoremap <C-c>v <C-w>v
+nnoremap <C-c>h <C-w>s
 set splitbelow splitright
 
 " Move between splits with leader-direction instead of c-w direction
@@ -277,6 +257,10 @@ vnoremap <leader>d "_d
 
 " deactivate 'Entering Ex mode' prompt
 :nnoremap Q <Nop>
+
+" clang format
+nnoremap <leader>f :ClangFormat<CR>
+
 " }}}
 
 " {{{ Folding settings
@@ -420,24 +404,18 @@ if has("autocmd")
       \ endif
   augroup end
 
-  augroup Neomake
-    autocmd!
-
-    autocmd BufWritePost * Neomake
-    autocmd BufReadPost  * Neomake
-
-  augroup end
-
 endif
 " }}}
 
-" {{{ Deoplete config
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_delay = 400
 let g:AutoClosePreserveDotReg = 0
-" Use tab instead of the default deoplete mapping
-"inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" {{{ Coc config
 
+" Use tab instead of the default  mapping
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" ctrl + space for force activate coc
+
+inoremap <silent><expr> <c-space> coc#refresh()
 " }}}
 
 " {{{ FZF config
