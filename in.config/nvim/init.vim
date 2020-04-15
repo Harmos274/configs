@@ -41,18 +41,21 @@ call plug#begin('~/.config/nvim/plugins')
   Plug 'alvan/vim-closetag'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim',
-  Plug 'itchyny/lightline.vim',
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  "Plug 'itchyny/lightline.vim',
   Plug 'sheerun/vim-polyglot'
   Plug 'editorconfig/editorconfig-vim'
   Plug 'tbastos/vim-lua'
-  Plug 'rust-lang/rust.vim'
+  Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
   Plug 'Townk/vim-autoclose'
   Plug 'PotatoesMaster/i3-vim-syntax'
   Plug 'terryma/vim-multiple-cursors'
-  Plug 'arakashic/chromatica.nvim'
+  "Plug 'arakashic/chromatica.nvim'
   Plug 'ryanoasis/vim-devicons'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'rhysd/vim-clang-format'
+  Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
+  Plug 'vim-scripts/DoxygenToolkit.vim', { 'for': ['c', 'cpp', 'python'] }
 
   " function! DoRemote(arg)
     " UpdateRemotePlugins
@@ -103,84 +106,16 @@ set sidescrolloff=1
 
 " }}}
 
-" Chromatica setting
-let g:chromatica#libclang_path='/usr/lib/libclang.so'
-let g:chromatica#enable_at_startup=1
-let g:chromatica#responsive_mode=1
-
 " {{{ nerdcommenter options
 let g:NERDSpaceDelims = 1
 " }}}
 
-"{{{ lightline options
-" Makes sure the status line is drawn in all buffers, not only the active one
-set laststatus=2
+" {{{ airline options
 
-let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'filename' ],
-      \             [ 'neomake' ] ]
-      \ },
-      \ 'component_function': {
-      \   'modified': 'LightlineModified',
-      \   'readonly': 'LightlineReadonly',
-      \   'fugitive': 'LightlineFugitive',
-      \   'filename': 'LightlineFilename',
-      \   'fileformat': 'LightlineFileformat',
-      \   'filetype': 'LightlineFiletype',
-      \   'fileencoding': 'LightlineFileencoding',
-      \   'mode': 'LightlineMode',
-      \ },
-      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
-      \ }
-function! LightlineModified()
-  return &filetype =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-endfunction
+let g:airline_theme = 'onedark'
+let g:airline_powerline_fonts = 1
 
-function! LightlineReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? "\ue0a2" : ''
-endfunction
-
-function! LightlineFugitive()
-  if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
-    let branch = fugitive#head()
-    return branch !=# '' ? "\ue0a0".branch : ''
-  endif
-  return ''
-endfunction
-
-function! LightlineFilename()
-  let filename = expand('%')
-  if len(filename) > 0
-    let filename = len(filename) < winwidth(0) - 25 ? filename : pathshorten(filename)
-  else
-    let filename = '[No Name]'
-  endif
-
-  return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-       \ (&ft == 'fzf' ? 'FZF' : filename) .
-       \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-endfunction
-
-function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-
-function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-endfunction
-
-function! LightlineFileencoding()
-  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
-endfunction
-
-function! LightlineMode()
-  return winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-"}}}
+" }}}
 
 " {{{ vim-closetag options
 let g:closetag_filenames = "*.html,*.html.erb"
@@ -341,6 +276,44 @@ au FileType qf call AdjustWindowHeight(3, 10)
  endfunction
 " }}}
 
+" {{{ Epitech Header
+
+" Configure header guard
+function HeaderGuard(filename)
+    let define = join(split(toupper(expand(a:filename)), '\.'), '_') . "_"
+    call append(line('$'),[
+                \"#ifndef " . define,
+                \"#define " . define,
+                \"","","",
+                \"#endif"])
+    execute "normal! jjjj"
+endfunction
+
+" Configure epitech header
+function! WriteEpitechHeader()
+    let projectName = input("Project Name : ")
+    let fileDescription = input("File description : ")
+    let extension = expand('%:e')
+    let isHeader = extension == "hpp" || extension == "h" || extension == "hh"
+    if &filetype == "make"
+        call append(line(0), ["##", "## EPITECH PROJECT, 2020",
+                    \"## " . projectName, "## File description:",
+                    \"## " . fileDescription, "##"])
+    else
+        call append(line(0), ["/*", "** EPITECH PROJECT, 2020",
+                    \"** " . projectName, "** File description:",
+                    \"** " . fileDescription, "*/"])
+    endif
+    if isHeader
+        call HeaderGuard(expand("%:t"))
+    endif
+endfunction
+
+command! Eph :call WriteEpitechHeader()
+command! EpitechHeader :call WriteHeader()
+
+" }}}
+
 " {{{ Undo settings
 set undofile                     " Save undo's after file closes
 set undolevels=1000              " How many undos
@@ -411,10 +384,10 @@ let g:AutoClosePreserveDotReg = 0
 " {{{ Coc config
 
 " Use tab instead of the default  mapping
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " ctrl + space for force activate coc
-
 inoremap <silent><expr> <c-space> coc#refresh()
 " }}}
 
